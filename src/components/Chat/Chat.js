@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
     chat: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(3),
         padding: theme.spacing(1),
         border: '1px solid',
-        borderColor: '#fff',
+        borderColor: '#fafafa',
         flexDirection: 'row',
         position: 'relative',
         [theme.breakpoints.down(900)]: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
             marginTop: theme.spacing(3)
         },
     },
-    messages:{
+    messages: {
         height: '85%',
         overflowY: 'auto',
     },
@@ -48,44 +49,58 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
+
 const Chat = props => {
     const classes = useStyles();
 
+
+    let content = (
+        <CircularProgress color='inherit' />
+    );
+
+    if (props.messages) {
+        content = (
+            <>
+                <div className={classes.messages}>
+                    {props.messages.map(message => (
+
+                        <Typography key={message._id} className={classes.message} variant='body1' component='p' >
+                            <span  >{`${message.userName}: ${message.text === null ? '' : message.text}`}</span>
+                        </Typography>
+
+
+                    ))}
+                </div>
+                <form>
+                    <TextField
+                        id="messege"
+                        className={classes.textField}
+                        placeholder="Digite uma mensagem..."
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton>
+                                        <SendIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        variant="outlined"
+                    />
+
+                </form>
+            </>
+        );
+    }
+
     return (
         <div className={classes.chat}>
-            <div className={classes.messages}>
-            {props.room.messages.map(message => (
-                <>
-                    <Typography className={classes.message} variant='body1' component='p' >
-                        <span  >{`${message.userName}: ${message.message === null ? '' : message.message}`}</span>
-                    </Typography>
-
-                </>
-            ))}
-            </div>
-            <form>
-                <TextField
-                    id="messege"
-                    className={classes.textField}
-                    placeholder="Digite uma mensagem..."
-                    fullWidth
-                    margin="normal"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton>
-                                    <SendIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                    variant="outlined"
-                />
-
-            </form>
+            {content}
         </div>
     );
 }

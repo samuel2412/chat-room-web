@@ -2,6 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles = makeStyles(theme => ({
@@ -10,7 +11,7 @@ const useStyles = makeStyles(theme => ({
         height: '100%',
         padding: theme.spacing(1),
         border: '1px solid',
-        borderColor: '#fff',
+        borderColor: '#fafafa',
         overflowY: 'auto',
         overflowX: 'auto',
 
@@ -34,13 +35,24 @@ const useStyles = makeStyles(theme => ({
 const Rooms = props => {
     const classes = useStyles();
 
+    let content = (
+        <CircularProgress color='inherit' />
+    );
+
+    if (props.rooms) {
+        content = (
+
+            props.rooms.map(room => (
+                <Button key={room._id} className={classes.room} >{room.name}</Button>
+            ))
+
+
+        );
+    }
+
     return (
         <div className={classes.root}>
-
-            {props.rooms.map(room => (
-                <Button className={classes.room} >{room.name}</Button>
-            ))}
-
+            {content}
         </div>
     );
 }

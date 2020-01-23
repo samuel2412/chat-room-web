@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
+
 
 import Rooms from '../../components/Rooms/Rooms';
 import Chat from '../../components/Chat/Chat';
@@ -14,28 +16,53 @@ const useStyles = makeStyles(theme => ({
             flexDirection: 'column',
         },
     },
-   
+
 }));
 
 const LandingPage = props => {
     const classes = useStyles();
-    const rooms = [
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-        {"messages":[{"userName":"samuel2412","message":"primeira mensagem da sala"},{"userName":"samuel2412","message":"segunda mensagem da sala"},{"userName":"KamiNoKage","message":null},{"userName":"KamiNoKage","message":"Kami..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."},{"userName":"KamiNoKage","message":"Agora está no firebase..."}],"_id":"5e28c3ac671a3637105c4f45","name":"Teste room","__v":15},
-    
-    
-    ]
+    const [rooms, setRooms] = useState([]);
+    const [messages, setMessages] = useState([]);
 
+
+    useEffect(() => {
+        axios.get('https://us-central1-chat-room-4fe30.cloudfunctions.net/app/room')
+            .then(response => {
+                //console.log(response)
+                setRooms(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+        axios.get(`https://us-central1-chat-room-4fe30.cloudfunctions.net/app/message/5e2a209737e2481338c12a92`)
+            .then(response => {
+                //console.log(response)
+                setMessages(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }, [])
+
+   /*  const loadMessages = (roomId = rooms[0]._id) => {
+        axios.get(`https://us-central1-chat-room-4fe30.cloudfunctions.net/app/message/${roomId}`)
+            .then(response => {
+                console.log(response)
+                setMessages(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+ */
     return (
         <div className={classes.root}>
-            <Rooms rooms={rooms} />
-            <Chat  room={rooms[0]} />
+            <>
+                <Rooms rooms={rooms} />
+                <Chat messages={messages} />
+            </>
         </div>
 
 
