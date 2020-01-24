@@ -44,7 +44,11 @@ const Rooms = props => {
         content = (
 
             props.rooms.map(room => (
-                <Button key={room._id} className={classes.room} >{room.name}</Button>
+                <Button
+                onClick={()=>props.changeRoom(room)}
+                key={room.id}
+                className={classes.room}
+                >{room.name}</Button>
             ))
 
 

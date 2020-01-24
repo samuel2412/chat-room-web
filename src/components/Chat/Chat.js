@@ -64,7 +64,7 @@ const Chat = props => {
                 <div className={classes.messages}>
                     {props.messages.map(message => (
 
-                        <Typography key={message._id} className={classes.message} variant='body1' component='p' >
+                        <Typography key={message.id} className={classes.message} variant='body1' component='p' >
                             <span  >{`${message.userName}: ${message.text === null ? '' : message.text}`}</span>
                         </Typography>
 
@@ -73,7 +73,7 @@ const Chat = props => {
                 </div>
                 <form onSubmit={props.sendMessage}>
                     <TextField
-                        id="message"
+                        aria-label="Digite uma mensagem"
                         value={props.messageToSend}
                         onChange={event => props.setMessageToSend(event.target.value)}
                         className={classes.textField}
