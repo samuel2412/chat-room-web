@@ -71,9 +71,11 @@ const Chat = props => {
 
                     ))}
                 </div>
-                <form>
+                <form onSubmit={props.sendMessage}>
                     <TextField
-                        id="messege"
+                        id="message"
+                        value={props.messageToSend}
+                        onChange={event => props.setMessageToSend(event.target.value)}
                         className={classes.textField}
                         placeholder="Digite uma mensagem..."
                         fullWidth
@@ -84,7 +86,7 @@ const Chat = props => {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton>
+                                    <IconButton type="submit">
                                         <SendIcon />
                                     </IconButton>
                                 </InputAdornment>

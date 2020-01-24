@@ -23,6 +23,7 @@ const LandingPage = props => {
     const classes = useStyles();
     const [rooms, setRooms] = useState([]);
     const [messages, setMessages] = useState([]);
+    const [messageToSend, setMessageToSend] = useState('')
 
 
     useEffect(() => {
@@ -46,22 +47,45 @@ const LandingPage = props => {
 
     }, [])
 
-   /*  const loadMessages = (roomId = rooms[0]._id) => {
-        axios.get(`https://us-central1-chat-room-4fe30.cloudfunctions.net/app/message/${roomId}`)
+    const sendMessage = (event) => {
+        event.preventDefault();
+        axios.post(`https://us-central1-chat-room-4fe30.cloudfunctions.net/app/message/send`,
+            {
+                roomId: rooms[0]._id,
+                userName: "Samuel",
+                text: messageToSend
+            }
+        )
             .then(response => {
-                console.log(response)
-                setMessages(response.data)
+                //console.log(response)
+                setMessages([...messages,response.data])
+                setMessageToSend('')
             })
             .catch(error => {
                 console.log(error)
             })
     }
- */
+
+    /*  const loadMessages = (roomId = rooms[0]._id) => {
+         axios.get(`https://us-central1-chat-room-4fe30.cloudfunctions.net/app/message/${roomId}`)
+             .then(response => {
+                 console.log(response)
+                 setMessages(response.data)
+             })
+             .catch(error => {
+                 console.log(error)
+             })
+     }
+  */
+
     return (
         <div className={classes.root}>
             <>
                 <Rooms rooms={rooms} />
-                <Chat messages={messages} />
+                <Chat messages={messages}
+                sendMessage={sendMessage}
+                setMessageToSend={setMessageToSend}
+                messageToSend={messageToSend} />
             </>
         </div>
 
